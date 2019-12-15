@@ -1,4 +1,2 @@
 #!/bin/bash
-echo -n "Enter filename ->"
-read name
-rm -i $name
+rm -i  $1 
