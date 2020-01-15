@@ -34,24 +34,21 @@ while [ "$1" != "" ]; do
         info
         exit 0 ;;
 
-      --ext=) shift 
-      ext=$1
-      ;;
-      --name=)shift
-name=$1
-      ;;
-      --path=) shift
-      path=$1
-    ;;
-    --gzip) 
-    gzip=true;;
-    --backup-dir=) shift
-    backupDir="--file $1"
-    ;;
- --inc-interval=) shift
-    ;;
-      * )                     usage
-                                exit 1
+    '--name=')
+shift
+;;
+        '--date=')
+        shift
+        ;;
+      
+        '--backup-dir=')
+shift
+;;
+      
+        '--out-dir=')
+        shift
+        ;;
+      
     esac
     shift
 done
