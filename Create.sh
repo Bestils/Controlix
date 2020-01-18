@@ -1,5 +1,29 @@
 #!/bin/bash
 #!/usr/bin/env/bash
+checkIfAnyTimeIsAdded(){
+if [ -n $inc] || [ -n $full]; then
+echo a
+if [ -n $inc && -n $full]; then 
+echo "You can't give both arguments for incremental and full backup"
+exit 0 
+ fi
+ else
+echo "You have to give type of backup"
+exit 0
+ fi
+}
+checkIfNameIsFilled(){
+if [! -n $name] 
+echo "you have to put a name argument !"
+exit 0
+ fi
+}
+checkIfScriptIsRunning(){
+if [ -f $backupLogs ]; then
+    echo $backupLogs exist. Check the logs what is wrong
+     exit 0
+fi
+}
 _main() {
   backupLogs='logs.txt'
 BACKUPFILE=backup-$(date +%m-%d-%Y)
@@ -13,6 +37,14 @@ BACKUPFILE=backup-$(date +%m-%d-%Y)
   IFS=','
 while [ "$1" != "" ]; do
     case $1 in
+      '-h' | '--help')
+        help
+        exit 0 ;;
+        
+      '-v' | '--version')
+       info
+        exit 0 
+        ;;
 
       --ext=) shift 
       ext=$@
@@ -25,10 +57,12 @@ while [ "$1" != "" ]; do
 
       --path=) shift
       path=$1
-    ;
+    ;;
+
     --full-interval=)
     cron  
    shift
+      
     ;;
     --inc-interval=) shift
       inc_interval= --listed-incremental=data.snar
