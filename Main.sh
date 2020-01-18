@@ -1,6 +1,5 @@
 #!/bin/bash
-
-#!/usr/bin/env bash
+#!/usr/bin/env/bash
 help() {
  cat help.txt
 }
@@ -11,36 +10,59 @@ usage()
 {
     echo "usage: sysinfo_page [[[-f file ] [-i]] | [-h]]"
 }
-
+checkIfAnyTimeIsAdded(){
+if [ -n $inc] || [ -n $full]; then
+echo a
+if [ -n $inc && -n $full]; then 
+echo "You can't give both arguments for incremental and full backup"
+exit 0 
+ fi
+ else
+echo "You have to give type of backup"
+exit 0
+ fi
+}
 _main() {
+  LogFileNameAndDest='logs.txt'
+
 BACKUPFILE=backup-$(date +%m-%d-%Y)
 # archive=${1:-$BACKUPFILE}
   name=''
   full_interval='' # format daty 'minuty godziny dni miesiące'
   inc_interval=''
   path=''
-  gzip= 'false'
   ext=''
   backupDir=''
   IFS=','
 while [ "$1" != "" ]; do
-  
     case $1 in
       '-h' | '--help')
         help
         exit 0 ;;
-
+        
       '-v' | '--version')
-        info
-        exit 0 ;;
+       info
+        exit 0 
+        ;;
 
       --ext=) shift 
-      ext=$1
+      ext=$@
+     extData= "find ./someDir -name "*.php" -o -name "*.html" + | "
       ;;
-      --name=)shift
-name=$1
+
+      --name=)  shift
+    name=$1
       ;;
+
       --path=) shift
+      path=$1
+    ;;
+
+    --full-interval=)
+   shift
+      path=$1
+    ;;
+    --inc-interval=) shift
       path=$1
     ;;
     --gzip) 
@@ -50,42 +72,33 @@ name=$1
     ;;
  --inc-interval=) shift
     ;;
-      * )                     usage
-                                exit 1
+      * )   
+      usage
+      exit 1
     esac
     shift
 done
   echo 'sadda' 
-  # if [[ $inc_interval != '' ]]
-  # then
-  #   script_location=$(find $HOME -name execIncrementalBackup.sh)
-  #   crontab -l > cronplik
-  #   echo "*/a */b */c */d * ${script_location}" >> cronplik # format co ile minut, godzin, dni, miesiecy
-  #   crontab cronplik
-  #     echo 'sadda' 
-  #   rm cronplik
-  # fi
-  # if [[ $full_interval != '' ]]
-  # then
-  #   script_location=$(find $HOME -name execFullBackup.sh)
-  #   echo "*/a */b */c */d * ${pwd}/skrypt" >> cronplik # format co ile minut, godzin, dni, miesiecy
-  #   crontab cronplik
-  #   rm cronplik
-  #     echo 'saddsa' 
-  # fi 
-  # exit 0
 }
-
+ sh ./logsCreator.sh -c -h
 _main "$@"
 echo "after main"
 echo $name
 echo $gzip
 echo $backupDir
-# sudo tar -cvpzf --listed-incremental=data.snar backup.tar.gz 
- 
+
+if [ -n $gzip ]; then 
+echo sudo tar -cvpzf --listed-incremental=data.snar backup.tar.gz 
+else
+echo sudo tar -cvpf --listed-incremental=data.snar backup.tar
+fi
+
 # sudo tar -xvpzf backup.tar.gz -C /recover 
 
 # sudo crontab -e
 
- echo tar+ $name +$gzip +$backupDir + -file +"$archive.tar"
+ echo $extData tar $name $gzip $backupDir  -file "$archive.tar"
+
+
 exit 0
+
