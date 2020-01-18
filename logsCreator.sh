@@ -4,21 +4,13 @@
 createLogs()
 {
   mkdir $backupLogs
+  echo "log created" 
 }
 destroyLogsIfEverythingWorks()
 {
-  rm -F $backupLogs
+  rm  $backupLogs
+  echo "log destroyed" 
 }
-checkIfSomethingExist(){
-if [ -f $backupLogs ]; then
-    echo $backupLogs exist. Check the logs what is wrong
-     exit 0
-  else 
-  echo "DSADS"
-fi
-
-}
-echo "chuj" 
 backupLogs="LOGS.txt"
 _main() {
 while [ "$1" != "" ]; do
@@ -30,13 +22,9 @@ while [ "$1" != "" ]; do
      '-r')  shift
 destroyLogsIfEverythingWorks
        ;;
-      '-h')  shift
-checkIfSomethingExist
-       ;;
            esac
     shift
 done
 }
 
 _main "$@"
-echo "chuj" 
