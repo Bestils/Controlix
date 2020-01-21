@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
+#!/usr/bin/env/bash
 checkIfAnyTimeIsAdded(){
-if [ -n $inc] || [ -n $full]; then
+if [ -n $inc ] || [ -n $full ]; then
 echo a
-if [ -n $inc && -n $full]; then 
+if [ -n $inc && -n $full ]; then 
 echo "You can't give both arguments for incremental and full backup"
 exit 0 
  fi
@@ -13,25 +13,25 @@ exit 0
  fi
 }
 checkIfNameIsFilled(){
-if [! -n $name] 
+if [! -n $name ]; then
+echo "you have to put a name argument !"
+exit 0
+ fi
+}
+checkIfDataIsFilled(){
+if [! -n $date ]; then  
+echo "you have to put a name argument !"
+exit 0
+ fi
+}
+checkIfBackup_dirIsFilled(){
+if [! -n $backup_dir ]; then
 echo "you have to put a name argument !"
 exit 0
  fi
 }
 checkIfNameIsFilled(){
-if [! -n $date] 
-echo "you have to put a name argument !"
-exit 0
- fi
-}
-checkIfNameIsFilled(){
-if [! -n $backup_dir] 
-echo "you have to put a name argument !"
-exit 0
- fi
-}
-checkIfNameIsFilled(){
-if [! -n $out_dir] 
+if [! -n $out_dir ]; then
 echo "you have to put a name argument !"
 exit 0
  fi
@@ -42,7 +42,6 @@ if [ -f $backupLogs ]; then
      exit 0
 fi
 }
-  
 _main() {
   for arg in "$@"
   do
@@ -50,12 +49,10 @@ _main() {
       --name=*)
         IFS='=' read -a splitted <<< $arg
         name=${splitted[1]} ;;
-
       --date=*)
         IFS='=' read -a arg <<< $arg
         IFS=',' read -a date <<< ${arg[1]}
-        date=$(date -d "${date[0]}-${date[1]}-${date[2]} ${date[3]}:${date[4]}:${date[5]}" +%s) ;;
-      
+        date=$(date -d "${date[0]}-${date[1]}-${date[2]} ${date[3]}:${date[4]}:${date[5]}" +%s) ;;   
       --backup_dir=*)
         IFS='=' read -a splitted <<< $arg
         backup_dir=${splitted[1]} 
@@ -95,7 +92,7 @@ _main() {
   done
 
   #ekstrakcja
-  if [[ $bestBackupMatch ]]
+  if [[ -n $bestBackupMatch ]]
   then
     if [[ ! -d $out_dir ]]
     then
@@ -107,5 +104,4 @@ _main() {
     echo "Nie znaleziono backupu"
   fi
 }
-
 _main "$@"

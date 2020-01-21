@@ -14,17 +14,17 @@ usage()
 }
 _main() {
   IFS=','
-_main() {
   for arg in "$@"
   do
     case "$arg" in
       '-h' | '--help')
-        displayHelp
-        exit 0 ;;
-
+        help
+        exit 0 
+        ;;
       '-v' | '--version')
         displayInfo
-        exit 0 ;;
+        exit 0 
+        ;;
     esac
   done
   case "$1" in
