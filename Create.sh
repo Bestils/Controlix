@@ -1,9 +1,9 @@
 #!/bin/bash
 #!/usr/bin/env/bash
 checkIfAnyTimeIsAdded(){
-if [ -n $inc] || [ -n $full]; then
+if [ -n $inc ] || [ -n $full ]; then
 echo a
-if [ -n $inc && -n $full]; then 
+if [[ -n $inc && -n $full ]]; then 
 echo "You can't give both arguments for incremental and full backup"
 exit 0 
  fi
@@ -13,13 +13,13 @@ exit 0
  fi
 }
 checkIfNameIsFilled(){
-if [! -n $name] 
+if [ ! -n $name ]; then 
 echo "you have to put a name argument !"
 exit 0
  fi
 }
 checkIfScriptIsRunning(){
-if [ -f $backupLogs ]; then
+if [ ! -f $backupLogs ]; then
     echo $backupLogs exist. Check the logs what is wrong
      exit 0
 fi
@@ -29,8 +29,8 @@ _main() {
 BACKUPFILE=backup-$(date +%m-%d-%Y)
 # archive=${1:-$BACKUPFILE}
   name=''
-  full_interval='' # format daty 'minuty godziny dni miesiące'
-  inc_interval=''
+  full_interval=''  # format daty 'minuty godziny dni miesiące'
+  inc_interval='' 
   path=''
   ext=''
   backupDir=''
@@ -39,30 +39,25 @@ while [ "$1" != "" ]; do
     case $1 in
       '-h' | '--help')
         help
-        exit 0 ;;
-        
+        exit 0
+         ;;
       '-v' | '--version')
        info
         exit 0 
         ;;
-
       --ext=) shift 
       ext=$@
-     extData= find ./ -name "*.php" -o -name "*.html" + | 
+     extData= "find ./ -name $@ + |"
       ;;
-
       --name=)  shift
-    name= "-filename=$1"
+    name= "-f $1"
       ;;
-
       --path=) shift
       path=$1
     ;;
-
     --full-interval=)
     cron  
    shift
-      
     ;;
     --inc-interval=) shift
       inc_interval= --listed-incremental=data.snar
@@ -70,7 +65,7 @@ while [ "$1" != "" ]; do
     --gzip) 
     gzip=true;;
     --backup-dir=) shift
-    backupDir="--file $1"
+    backupDir=$1
     ;;
       * )   
       usage
@@ -83,10 +78,9 @@ done
 checkIfNameIsFilled
 checkIfAnyTimeIsAdded
 checkIfScriptIsRunning
- sh ./logsCreator.sh -c 
+ source ./logsCreator.sh -c 
 _main "$@"
 echo "after main"
-
 
 if [ -n $gzip ]; then 
 echo sudo tar -cvpzf --listed-incremental=data.snar backup.tar.gz 
@@ -98,8 +92,9 @@ fi
 
 # sudo crontab -e
 
- echo $extData tar $name $gzip $backupDir $inc_interval -file "$archive.tar"$gzip
-
-
+echo tar -cv $name  $backupDir $inc_interval $archive $gzip
+sudo tar -cv $name  $backupDir $inc_interval $archive $gzip
+ source ./logsCreator.sh -r
 exit 0
+
 

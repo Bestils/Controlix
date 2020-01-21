@@ -1,14 +1,13 @@
 #!/bin/bash
 #!/usr/bin/env/bash
-
 createLogs()
 {
-  mkdir $backupLogs
+  touch $backupLogs
   echo "log created" 
 }
 destroyLogsIfEverythingWorks()
 {
-  rm  $backupLogs
+  rm  -f $backupLogs
   echo "log destroyed" 
 }
 backupLogs="LOGS.txt"
