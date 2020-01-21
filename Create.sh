@@ -24,6 +24,12 @@ if [ -f $backupLogs ]; then
      exit 0
 fi
 }
+year=`date +%Y`
+month=`date +%m`
+day=`date +%d`
+hour=`date +%H`
+minute=`date +%M`
+dateOfSnar=$year"/"$month"/"$day"/"$hour"/"$minute
 _main() {
   backupLogs='logs.txt'
 BACKUPFILE=backup-$(date +%m-%d-%Y)
@@ -65,7 +71,9 @@ while [ "$1" != "" ]; do
       
     ;;
     --inc-interval=) shift
-      inc_interval= --listed-incremental=data.snar
+      inc_interval="--listed-incremental=$dateOfSnar.snar"
+      echo $dateOfSnar
+      cat >> incrementalBackupsDates 
     ;;
     --gzip) 
     gzip=true;;
