@@ -1,0 +1,9 @@
+tar -cvzp -f /home/death/Bash/test/nazwapliku_full__2020_01_23_00_09.tar /home/death/Bash/test2 --full-interval=
+tar -cvzp -f /home/death/Bash/test/nazwapliku_full__2020_01_23_00_09.tar /home/death/Bash/test2 --full-interval=
+tar -cvzp -f /home/death/Bash/test/nazwapliku_full__2020_01_23_00_11.tar /home/death/Bash/test2 --full-interval=
+tar -cvzp -f /home/death/Bash/test/nazwapliku_inc__2020_01_23_00_12.tar /home/death/Bash/test2 --inc-intervalnazwapliku.snar 123123
+tar -cvzp -f /home/death/Bash/test/nazwapliku_inc__2020_01_23_00_13.tar /home/death/Bash/test2 --inc-intervalnazwapliku.snar 123123
+tar -cvzp -f /home/death/Bash/test/nazwapliku_inc__2020_01_23_00_13.tar /home/death/Bash/test2 --inc-intervalnazwapliku.snar 123123
+tar -cvzp -f /home/death/Bash/test/nazwapliku_inc__2020_01_23_00_14.tar /home/death/Bash/test2 --inc-intervalnazwapliku.snar 123123
+tar -cvzp -f /home/death/Bash/test/nazwapliku_inc__2020_01_23_00_15.tar /home/death/Bash/test2 --inc-interval=nazwapliku.snar 123123
+123123 tar -cvzp -f /home/death/Bash/test/nazwapliku_inc__2020_01_23_00_16.tar /home/death/Bash/test2 --inc-interval=nazwapliku.snar

@@ -1,27 +1,21 @@
 #!/bin/bash
 #!/usr/bin/env/bash
-checkIfAnyTimeIsAdded(){
-if [ -n $inc ] || [ -n $full ]; then
-if [[ -n $inc && -n $full ]]; then 
-echo "You can't give both arguments for incremental and full backup"
-exit 0 
- fi
- else
-echo "You have to give type of backup"
-exit 0
- fi
-}
-checkIfNameIsFilled(){
-if [ ! -n $name ]; then 
+
+checkIfPathIsFilled(){
+if [ -z $path ]; then 
 echo "you have to put a name argument !"
 exit 0
  fi 
 }
 checkIfNameIsFilled(){
-if [ ! -n $name ]; then 
+if [ -z $name ]; then 
 echo "you have to put a name argument !"
 exit 0
  fi
+}
+usage()
+{
+    echo "usage: check -h to see help"
 }
 checkIfNumberIsADigit(){
  if [[ ! $number =~ [[:digit:]]+ ]];
@@ -40,12 +34,6 @@ _main() {
   backupLogs='logs.txt'
 BACKUPFILE=backup-$(date +%m-%d-%Y)
 # archive=${1:-$BACKUPFILE}
-  name=''
-  full_interval=''  # format daty 'minuty godziny dni miesiące'
-  inc_interval='' 
-  path=''
-  ext=''
-  backupDir=''
   IFS=','
 while [ "$1" != "" ]; do
     case $1 in
@@ -68,16 +56,15 @@ while [ "$1" != "" ]; do
       path=$1
     ;;
     --full-interval=)
-    $typeOfBackup= "--full-interval"
+    full_interval=$1
+    typeOfBackup="--full-interval"
     full="full"
    shift
     ;;
     --inc-interval=) shift
-    inf="inc"
-     $typeOfBackup= "--inc-interval"
-      inc_interval="--listed-incremental=.snar"
-      echo $dateOfSnar
-      cat >> incrementalBackupsDates 
+    inc="inc"
+     typeOfBackup="--inc-interval"
+      inc_interval=$1
     ;;
     --gzip) 
     gzip=".gz";;
@@ -90,21 +77,32 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
-  echo 'sadda' 
 }
-checkIfNameIsFilled
-checkIfAnyTimeIsAdded
-checkIfScriptIsRunning
- #source ./logsCreator.sh -c 
 _main "$@"
-echo "after main"
+checkIfPathIsFilled
+checkIfNameIsFilled
+if [[ -n $inc || -n $full ]]; then
+if [[ -n $inc && -n $full ]]; then 
+echo "You can't give both arguments for incremental and full backup"
+
+ fi
+ if [[ -z $inc && -n $full ]]; then 
+echo  $full_interval -e tar -cvzp -f $backupDir/$name"_"$inc$full"_"$dateOfSnar.tar$gzip  $path   >> tasks.data
+exit 0 
+ fi
+ if [[ -n $inc && -z $full ]]; then 
+echo -e  $inc_interval tar -cvzp -f $backupDir/$name"_"$inc$full"_"$dateOfSnar.tar$gzip  $path  $typeOfBackup"="$name".snar"  >> tasks.data
+exit 0 
+ fi
+ else
+echo "You have to give type of backup"
+exit 0
+ fi
 
 # sudo tar -xvpzf backup.tar.gz -C /recover 
 
 # sudo crontab -e
-
-echo tar -cvzp -f $backupDir/$name/$name$inc$full$date.tar$gzip  $path  $inc_interval $full_interval $archive 
-
+ 
 # sudo tar -cv $name  $backupDir $inc_interval $archive $gzip
- # source ./logsCreator.sh -r
+ #
 exit 0
