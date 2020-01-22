@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ls -lrt | grep ^- | awk 'END{print $NF}'

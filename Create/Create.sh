@@ -24,18 +24,18 @@ exit 0
  fi
 }
 checkIfNumberIsADigit(){
- if [[ ! $number =~ [[:digit:]]+ ]]
+ if [[ ! $number =~ [[:digit:]]+ ]];
         then
           echo "$typeOfBackup przyjmuje tylko wartość w sekundach"
           exit 1
         fi 
-
+}
 year=`date +%Y`
 month=`date +%m`
 day=`date +%d`
 hour=`date +%H`
 minute=`date +%M`
-dateOfSnar=$year"/"$month"/"$day"/"$hour"/"$minute
+dateOfSnar=_$year"_"$month"_"$day"_"$hour"_"$minute
 _main() {
   backupLogs='logs.txt'
 BACKUPFILE=backup-$(date +%m-%d-%Y)
@@ -62,16 +62,18 @@ while [ "$1" != "" ]; do
      extData= "find ./ -name $@ + |"
       ;;
       --name=)  shift
-    name= "$1"
+    name="$1"
       ;;
       --path=) shift
       path=$1
     ;;
     --full-interval=)
     $typeOfBackup= "--full-interval"
+    full="full"
    shift
     ;;
     --inc-interval=) shift
+    inf="inc"
      $typeOfBackup= "--inc-interval"
       inc_interval="--listed-incremental=.snar"
       echo $dateOfSnar
@@ -101,11 +103,8 @@ echo "after main"
 
 # sudo crontab -e
 
-echo tar -cvzp -f $name.tar$gzip  $path $backupDir $inc_interval $archive 
-
+echo tar -cvzp -f $backupDir/$name/$name$inc$full$date.tar$gzip  $path  $inc_interval $full_interval $archive 
 
 # sudo tar -cv $name  $backupDir $inc_interval $archive $gzip
  # source ./logsCreator.sh -r
 exit 0
-
-
