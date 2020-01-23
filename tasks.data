@@ -1,0 +1,6 @@
+--full-interval= -e tar -cvzp -f /home/death/Project/test/jakisBackup_full__2020_01_23_22_16.tar /home/death/Project/test2
+--full-interval= -e tar -cvzp -f /home/death/Project/test/jakisBackup_full__2020_01_23_22_17.tar /home/death/Project/test2
+--full-interval= -e tar -cvzp -f /home/death/Project/test/jakisBackup_full__2020_01_23_22_17.tar /home/death/Project/test2
+--full-interval= -e tar -cvzp -f /home/death/Project/test/jakisBackup_full__2020_01_23_22_18.tar /home/death/Project/test2
+--full-interval= -e tar -cvzp -f /home/death/Project/test/jakisBackup_full__2020_01_23_22_19.tar /home/death/Project/test2
+1579817570 1000 --name= jakisBackup --path= /home/death/Bash/test2 --backup-dir= /home/death/Bash/test --full-interval=

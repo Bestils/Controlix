@@ -26,7 +26,7 @@ checkIfNumberIsADigit(){
           exit 1
         fi 
 }
-date=$(date +%Y_%m_%d_%H_%M)
+
 _main() {
   backupLogs='logs.txt'
 BACKUPFILE=backup-$(date +%m-%d-%Y)
@@ -44,10 +44,6 @@ while [ "$1" != "" ]; do
        ./logsCreator.sh -r
         exit 0 
         ;;
-        -execute)
-        shift
-        execute=1
-        ;;
       --ext=) shift 
       ext=$@
      extData= "find ./ -name $@ + |"
@@ -59,8 +55,7 @@ while [ "$1" != "" ]; do
       path=$1
     ;;
     --full-interval=)
-    shift
-    full_interval_data=$1
+    full_interval=$1
     typeOfBackup="--full-interval"
     full="full"
    shift
@@ -71,9 +66,7 @@ while [ "$1" != "" ]; do
       inc_interval=$1
     ;;
     --gzip) 
-    gzip=".gz"
-    isGzip="--gzip"
-    ;;
+    gzip=".gz";;
     --backup-dir=) shift
     backupDir=$1
     ;;
@@ -89,20 +82,23 @@ done
 _main "$@"
 checkIfPathIsFilled
 checkIfNameIsFilled
- if [[ -n $execute ]];
+ if [-n $execute ];
+
  then
 if [[ -n $inc || -n $full ]]; then
 if [[ -n $inc && -n $full ]]; then 
 echo "You can't give both arguments for incremental and full backup"
- fi
- if [[ -z $inc && -n $full ]]; then 
- tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  $path    >> tasks.data
 
- ./logsCreator.sh -r
+ fi
+
+ if [[ -z $inc && -n $full ]]; then 
+ tar -cvzp -f $backupDir/$name"_"$inc$full"_"$dateOfSnar.tar$gzip  $path -f $backupDir/$name"_"$inc$fu   >> tasks.data
+./logsCreator.sh -r -f $backupDir/$name"_"$inc$fu
+echo 1
 exit 0 
  fi
  if [[ -n $inc && -z $full ]]; then 
- tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  $path  $typeOfBackup"="$name".snar"  >> tasks.data
+ tar -cvzp -f $backupDir/$name"_"$inc$full"_"$dateOfSnar.tar$gzip  $path  $typeOfBackup"="$name".snar"  >> tasks.data
 ./logsCreator.sh -r
 
 exit 0 
@@ -113,10 +109,13 @@ echo "You have to give type of backup"
 exit 0
  fi
 else 
-echo -e $(date +%s)  $inc_interval $full_interval_data  --name= $name --path= $path --backup-dir= $backupDir $typeOfBackup= $full_interval $isGzip >> tasks.data
+echo -e $full_interval  $inc_interval  $@ 
 echo "task created !"
 ./logsCreator.sh -r
 exit 0
+
+
+
 
 fi 
 echo chuj

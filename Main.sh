@@ -49,8 +49,6 @@ _main() {
       usage
       exit 1
   esac
-  echo "Nieznany argument"
-  exit 0
 }
 checkIFLogsAreActive
 ./logsCreator.sh -c

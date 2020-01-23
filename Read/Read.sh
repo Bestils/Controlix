@@ -9,7 +9,7 @@ checkIfFileExists(){
 checkIfFileExists(){
  if [[ -z $name ]]
   then
-    echo "Musisz podać --name"
+    echo "Brakujący argument--name"
     exit 0
   fi
 }

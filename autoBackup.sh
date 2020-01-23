@@ -21,7 +21,6 @@ _main() {
  
 createTasksIfNotExists
 
-
     secondsSinceEpoch=$(date "+%s")
     touch tasks.data.new
     while read line
@@ -31,8 +30,7 @@ createTasksIfNotExists
             IFS=' ' read -a line <<< $line~S
             if [[ line[0]+line[1] -le secondsSinceEpoch ]]
             then
-                echo -e "Wykonuję ${line[@]:2}"
-                eval "${line[@]:2}"
+               ./Create.sh ${line[@]:2}
                 echo -e "${line[0]} ${secondsSinceEpoch} ${line[@]:2} \n" >> tasks.data.new
             else
                 echo -e "${line[@]} \n" >> tasks.data.new

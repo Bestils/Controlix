@@ -3,12 +3,12 @@
 createLogs()
 {
   touch $backupLogs
-  echo "log created" 
+  echo "Process Started" 
 }
 destroyLogsIfEverythingWorks()
 {
   rm  -f $backupLogs
-  echo "log destroyed" 
+  echo "Process Ended" 
 }
 backupLogs="LOGS.txt"
 _main() {
