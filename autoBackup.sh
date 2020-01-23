@@ -17,31 +17,31 @@ createTasksIfNotExists(){
     fi
 }
 _main() {
-    cd $(find / -name "Controlix" -print 2>/dev/null)/Controlix
- 
-createTasksIfNotExists
 
+createTasksIfNotExists
     secondsSinceEpoch=$(date "+%s")
     touch tasks.data.new
     while read line
     do
+    
         if [[ $line =~ [0-9]+[[:space:]][0-9]+[[:space:]].* ]]
         then
-            IFS=' ' read -a line <<< $line~S
+            IFS=' ' read -a line <<< $line
             if [[ line[0]+line[1] -le secondsSinceEpoch ]]
             then
-               ./Create.sh ${line[@]:2}
+            echo ${line[@]:2}
+              sh  Create/Create.sh ${line[@]:2}
+               echo "asa"
                 echo -e "${line[0]} ${secondsSinceEpoch} ${line[@]:2} \n" >> tasks.data.new
             else
                 echo -e "${line[@]} \n" >> tasks.data.new
             fi
         fi
     done < tasks.data
-    
-    exit 0
+   
 }
 
 checkIFLogsAreActive
- source ./logsCreator.sh -c
+  ./logsCreator.sh -c
 _main "$@"
- source ./logsCreator.sh -r
+  ./logsCreator.sh -r

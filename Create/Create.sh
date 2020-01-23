@@ -28,6 +28,7 @@ checkIfNumberIsADigit(){
 }
 date=$(date +%Y_%m_%d_%H_%M)
 _main() {
+  echo $@
   backupLogs='logs.txt'
 BACKUPFILE=backup-$(date +%m-%d-%Y)
 # archive=${1:-$BACKUPFILE}
@@ -45,8 +46,7 @@ while [ "$1" != "" ]; do
         exit 0 
         ;;
         -execute)
-        shift
-        execute=1
+        executed=1
         ;;
       --ext=) shift 
       ext=$@
@@ -89,7 +89,7 @@ done
 _main "$@"
 checkIfPathIsFilled
 checkIfNameIsFilled
- if [[ -n $execute ]];
+ if [[ -n $executed ]];
  then
 if [[ -n $inc || -n $full ]]; then
 if [[ -n $inc && -n $full ]]; then 
@@ -113,11 +113,11 @@ echo "You have to give type of backup"
 exit 0
  fi
 else 
-echo -e $(date +%s)  $inc_interval $full_interval_data  --name= $name --path= $path --backup-dir= $backupDir $typeOfBackup= $full_interval $isGzip >> tasks.data
+echo -e $(date +%s) $full_interval_data $inc_interval  --name= $name --path= $path --backup-dir= $backupDir $typeOfBackup= $full_interval_data $inc_interval $isGzip -execute >> tasks.data
 echo "task created !"
 ./logsCreator.sh -r
 exit 0
 
 fi 
-echo chuj
+
 exit 0

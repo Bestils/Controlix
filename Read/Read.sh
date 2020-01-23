@@ -36,36 +36,48 @@ checkIfFileExists(){
   }
 _main() {
 
-  for arg in "$1"
-  do
-    case "$arg" in 
+ while [ "$1" != "" ]; do
+ echo s
+    case "$1" in 
       --name=)
+      shift
         name=$1 
         ;;
-      --date=*)
-       
+      --date=)
+       shift
         IFS='_' read -a date <<< $1
-        date=$(date -d "${date[0]}-${date[1]}-${date[2]} ${date[3]}:${date[4]}:00" +%s) ;;
-      
+        date=$(date -d "${date[0]}-${date[1]}-${date[2]} ${date[3]}:${date[4]}:00" +%s) 
+    
+      ;;
       --backup_dir=)
-   
+   shift
         backup_dir=$1
+        echo $backup_dir  
      ;;
       
       --out_dir=)
+      shift
         out_dir=$1
          ;;
-    esac
-  done
-
+     esac
+    shift
+done
+}
+_main "$@"
+ echo $date
   #szukanie backupu do otwarcia
   for file in "$backup_dir"/*
   do
     candidate=${file##*/}
-    backupFileRegex=$name"_[[:alpha:]]+_([[:digit:]]+_){4}[[:digit:]]+.*" #$name_cokolwiek_data_colokwiek wystarczy
+
+    backupFileRegex=$name"_[[:alpha:]]+_([[:digit:]]+_){4}[[:digit:]]+.*"
+
+    # backupFileRegex="/[a-z]+_+((\d+_){4})+\d+.*/g" #$name_cokolwiek_data_colokwiek wystarczy
     #regex czy to jest backup
+    
     if [[ $candidate =~ $backupFileRegex ]]
     then
+    echo $candidate
       #wyciąga datę z nazwy pliku
       candidateDate=$(echo $candidate | grep -oE "([[:digit:]]+_){4}[[:digit:]]+")
       IFS='_' read -a candidateDate <<< $candidateDate
@@ -90,6 +102,5 @@ _main() {
   else
     echo "Nie znaleziono backupu"
   fi
-}
 
-_main "$@"
+
