@@ -4,12 +4,14 @@
 checkIfPathIsFilled(){
 if [ -z $path ]; then 
 echo "you have to put a name argument !"
+./logsCreator.sh -r
 exit 0
  fi 
 }
 checkIfNameIsFilled(){
 if [ -z $name ]; then 
 echo "you have to put a name argument !"
+
 exit 0
  fi
 }
@@ -39,10 +41,12 @@ while [ "$1" != "" ]; do
     case $1 in
       '-h' | '--help')
         help
+        ./logsCreator.sh -r
         exit 0
          ;;
       '-v' | '--version')
        info
+       ./logsCreator.sh -r
         exit 0 
         ;;
       --ext=) shift 
@@ -88,14 +92,17 @@ echo "You can't give both arguments for incremental and full backup"
  fi
  if [[ -z $inc && -n $full ]]; then 
 echo  $full_interval -e tar -cvzp -f $backupDir/$name"_"$inc$full"_"$dateOfSnar.tar$gzip  $path   >> tasks.data
+./logsCreator.sh -r
 exit 0 
  fi
  if [[ -n $inc && -z $full ]]; then 
 echo -e  $inc_interval tar -cvzp -f $backupDir/$name"_"$inc$full"_"$dateOfSnar.tar$gzip  $path  $typeOfBackup"="$name".snar"  >> tasks.data
+./logsCreator.sh -r
 exit 0 
  fi
  else
 echo "You have to give type of backup"
+./logsCreator.sh -r
 exit 0
  fi
 

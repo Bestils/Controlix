@@ -1,5 +1,12 @@
 #!/bin/bash
 #!/usr/bin/env/bash
+checkIFLogsAreActive(){
+       if [[ -f "LOGS.txt" ]];
+    then
+    echo "there is another process in background"
+        exit 0
+    fi
+}
 help() 
 {
  cat help.txt
@@ -10,7 +17,7 @@ info()
 }
 usage()
 {
-    echo "usage: sysinfo_page [[[-f file ] [-i]] | [-h]]"
+    echo "You need to use create or read. For more info use -h "
 }
 _main() {
   IFS=','
@@ -30,13 +37,13 @@ _main() {
   case "$1" in
     'read')
       shift
-      source "read/read.sh" $@
-      exit 0 ;;
+      source "Read/Read.sh" $@
+      ;;
 
     'create')
       shift
-      source "/create/create.sh" $@
-      exit 0 ;;
+      source "Create/Create.sh" $@
+  ;;
 
        * )   
       usage
@@ -45,8 +52,9 @@ _main() {
   echo "Nieznany argument"
   exit 0
 }
-
+checkIFLogsAreActive
+./logsCreator.sh -c
 _main "$@"
-
+./logsCreator.sh -r
 exit 0
 
