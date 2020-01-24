@@ -17,31 +17,34 @@ createTasksIfNotExists(){
     fi
 }
 _main() {
-
-createTasksIfNotExists
+    echo stoles
     secondsSinceEpoch=$(date "+%s")
-    touch tasks.data.new
+
     while read line
     do
-    
+
         if [[ $line =~ [0-9]+[[:space:]][0-9]+[[:space:]].* ]]
         then
+        echo stolec
+
             IFS=' ' read -a line <<< $line
-            if [[ line[0]+line[1] -le secondsSinceEpoch ]]
+            if [[ ${line[0]}+${line[1]} -le $secondsSinceEpoch ]]
             then
-            echo ${line[@]:2}
-              sh  Create/Create.sh ${line[@]:2}
-               echo "asa"
-                echo -e "${line[0]} ${secondsSinceEpoch} ${line[@]:2} \n" >> tasks.data.new
+                echo -e ${line[0]} $secondsSinceEpoch  ${line[@]:2}  >> tasks.data.new
+                addNewTask
+                ./logsCreator.sh -r
+                  source  Create/Create.sh ${line[@]:2}
             else
+            
                 echo -e "${line[@]} \n" >> tasks.data.new
             fi
         fi
     done < tasks.data
    
 }
-
+createTasksIfNotExists
 checkIFLogsAreActive
   ./logsCreator.sh -c
 _main "$@"
-  ./logsCreator.sh -r
+
+exit 0

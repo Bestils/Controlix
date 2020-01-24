@@ -1,6 +1,1 @@
-1579822867 10 --name= newOne --path= /home/death/Bash/test2 --backup-dir= /home/death/Bash/test --full-interval= 10 -execute
--e 1579822905 10 --name= newOne --path= /home/death/Bash/test2 --backup-dir= /home/death/Bash/test --full-interval= 10 -execute
-1579822943 10 --name= newOne --path= /home/death/Bash/test2 --backup-dir= /home/death/Bash/test --full-interval= 10 -execute
-1579823021 10 --name= newOne --path= /home/death/Bash/test2 --backup-dir= /home/death/Bash/test --full-interval= 10 -execute
-/home/death/Bash/test2/
-/home/death/Bash/test2/du
+10 1579906458 --name= newOne --path= /home/death/Bash/test2 --backup-dir= /home/death/Bash/test --inc-interval= 10 -execute

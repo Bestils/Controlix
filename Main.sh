@@ -44,7 +44,11 @@ _main() {
       shift
       source "Create/Create.sh" $@
   ;;
-
+    'cron')
+      shift
+      echo "Aby uruchomic auto backup nalezy wpier wpisac to w konsole "
+      echo "Pozwoli to na uruchamianie tasków w czasie potrzebnym dla nich "
+  ;;
        * )   
       usage
       exit 1

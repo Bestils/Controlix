@@ -37,7 +37,6 @@ checkIfFileExists(){
 _main() {
 
  while [ "$1" != "" ]; do
- echo s
     case "$1" in 
       --name=)
       shift
@@ -52,19 +51,20 @@ _main() {
       --backup_dir=)
    shift
         backup_dir=$1
-        echo $backup_dir  
      ;;
       
       --out_dir=)
       shift
         out_dir=$1
+        eval out_dir=$out_dir
+        echo $out_dir
          ;;
      esac
     shift
 done
 }
 _main "$@"
- echo $date
+
   #szukanie backupu do otwarcia
   for file in "$backup_dir"/*
   do
@@ -95,10 +95,11 @@ _main "$@"
   then
     if [[ ! -d $out_dir ]]
     then
+    echo nope
       mkdir $out_dir
     fi
     echo "odtwarzanie backupu $bestBackupMatch"
-    tar -xvf $bestBackupMatch -C $out_dir
+    tar -xvf $bestBackupMatch  -C $out_dir
   else
     echo "Nie znaleziono backupu"
   fi

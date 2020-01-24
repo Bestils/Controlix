@@ -68,6 +68,7 @@ while [ "$1" != "" ]; do
     --inc-interval=) shift
     inc="inc"
      typeOfBackup="--inc-interval"
+     increm="--listed-incremental"
       inc_interval=$1
     ;;
     --gzip) 
@@ -96,14 +97,18 @@ if [[ -n $inc && -n $full ]]; then
 echo "You can't give both arguments for incremental and full backup"
  fi
  if [[ -z $inc && -n $full ]]; then 
- tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  $path    >> tasks.data
-
  ./logsCreator.sh -r
+ cd $path
+ tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  * 
+
+ 
 exit 0 
  fi
  if [[ -n $inc && -z $full ]]; then 
- tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  $path  $typeOfBackup"="$name".snar"  >> tasks.data
-./logsCreator.sh -r
+ ./logsCreator.sh -r
+ cd $path
+ tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip    $increm"="$name".snar" *
+
 
 exit 0 
  fi
@@ -113,7 +118,7 @@ echo "You have to give type of backup"
 exit 0
  fi
 else 
-echo -e $(date +%s) $full_interval_data $inc_interval  --name= $name --path= $path --backup-dir= $backupDir $typeOfBackup= $full_interval_data $inc_interval $isGzip -execute >> tasks.data
+echo -e $full_interval_data $inc_interval  $(date +%s) --name= $name --path= $path --backup-dir= $backupDir $typeOfBackup= $full_interval_data$inc_interval $isGzip -execute >> tasks.data
 echo "task created !"
 ./logsCreator.sh -r
 exit 0
