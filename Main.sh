@@ -46,8 +46,10 @@ _main() {
   ;;
     'cron')
       shift
-      echo "Aby uruchomic auto backup nalezy wpier wpisac to w konsole "
-      echo "Pozwoli to na uruchamianie tasków w czasie potrzebnym dla nich "
+      echo "Wpierdol to do konsoli i kron zadziała byku"
+     echo "(crontab -l 2>/dev/null; echo "* * * * * /home/death/Bash/Controlix") | crontab -"
+
+      echo "task dodany"
   ;;
        * )   
       usage
