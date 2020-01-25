@@ -1,7 +1,5 @@
 #                         Controlix
 
-
-
 #  Features!
 
   -  Programm your own auto backuper, running whenever you want

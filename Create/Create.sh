@@ -87,6 +87,12 @@ while [ "$1" != "" ]; do
     shift
 done
 }
+cd $(find / -name "Controlix" -print 2>/dev/null)
+  mycron=$(crontab -l)
+  if [ -z $( echo $mycron | grep -oh "autoBackup.sh") ]
+  then
+    (crontab -l 2>/dev/null; echo "* * * * * $(find / -name "Controlix" -print 2>/dev/null)/autoBackup.sh") | crontab -
+  fi
 _main "$@"
 checkIfPathIsFilled
 checkIfNameIsFilled

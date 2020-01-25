@@ -13,7 +13,7 @@ help()
 }
 info() 
 {
-  echo '3.14 COPYRIGHT: PATRYK KIRSZENSTEIN LICENSE: MIT'
+  echo '3.14 COPYRIGHT: PATRYK KIRSZENSTEIN '
 }
 usage()
 {
@@ -46,16 +46,17 @@ _main() {
   ;;
     'cron')
       shift
-      echo "Wpierdol to do konsoli i kron zadziała byku"
+      echo "Wpisz to do konsoli aby dodac taski do crona"
      echo "(crontab -l 2>/dev/null; echo "* * * * * /home/death/Bash/Controlix") | crontab -"
-
-      echo "task dodany"
+      echo "taski przypisane do crona "
   ;;
        * )   
       usage
+      ./logsCreator.sh -r
       exit 1
   esac
 }
+cd $HOME/Bash/Controlix
 checkIFLogsAreActive
 ./logsCreator.sh -c
 _main "$@"

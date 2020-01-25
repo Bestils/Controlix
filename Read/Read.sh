@@ -57,7 +57,6 @@ _main() {
       shift
         out_dir=$1
         eval out_dir=$out_dir
-        echo $out_dir
          ;;
      esac
     shift
@@ -95,7 +94,6 @@ _main "$@"
   then
     if [[ ! -d $out_dir ]]
     then
-    echo nope
       mkdir $out_dir
     fi
     echo "odtwarzanie backupu $bestBackupMatch"

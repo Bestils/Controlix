@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+
+#!/usr/bin/env Bash
+
 checkIFLogsAreActive(){
        if [[ -f "LOGS.txt" ]];
     then
@@ -17,7 +19,6 @@ createTasksIfNotExists(){
     fi
 }
 _main() {
-    echo stoles
     secondsSinceEpoch=$(date "+%s")
 
     while read line
@@ -25,7 +26,6 @@ _main() {
 
         if [[ $line =~ [0-9]+[[:space:]][0-9]+[[:space:]].* ]]
         then
-        echo stolec
 
             IFS=' ' read -a line <<< $line
             if [[ ${line[0]}+${line[1]} -le $secondsSinceEpoch ]]
@@ -42,6 +42,8 @@ _main() {
     done < tasks.data
    
 }
+# cd $HOME/Bash/Controlix
+ cd $(find / -name "Controlix" -print 2>/dev/null)
 createTasksIfNotExists
 checkIFLogsAreActive
   ./logsCreator.sh -c
