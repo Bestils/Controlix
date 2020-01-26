@@ -44,6 +44,7 @@ _main() {
 }
 # cd $HOME/Bash/Controlix
  cd $(find / -name "Controlix" -print 2>/dev/null)
+
 createTasksIfNotExists
 checkIFLogsAreActive
   ./logsCreator.sh -c

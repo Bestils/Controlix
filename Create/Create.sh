@@ -89,9 +89,9 @@ done
 }
 cd $(find / -name "Controlix" -print 2>/dev/null)
   mycron=$(crontab -l)
-  if [ -z $( echo $mycron | grep -oh "autoBackup.sh") ]
+  if [[ -z $( echo $mycron | grep -oh "autoBackup.sh") ]];
   then
-    (crontab -l 2>/dev/null; echo "* * * * * $(find / -name "Controlix" -print 2>/dev/null)/autoBackup.sh") | crontab -
+    (crontab -l 2>/dev/null; echo "* * * * * $(find / -name "Controlix" -print 2>/dev/null) /autoBackup.sh") | crontab -
   fi
 _main "$@"
 checkIfPathIsFilled
@@ -105,14 +105,16 @@ echo "You can't give both arguments for incremental and full backup"
  if [[ -z $inc && -n $full ]]; then 
  ./logsCreator.sh -r
  cd $path
- tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  * 
+ tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  .* 
 
  
 exit 0 
  fi
  if [[ -n $inc && -z $full ]]; then 
  ./logsCreator.sh -r
+ echo $path
  cd $path
+ eval pwd
  tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip    $increm"="$name".snar" *
 
 
