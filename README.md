@@ -8,7 +8,7 @@
  
  
 You can also:
-  - Host files online by ncat
+  
   - create jobs remotely
  
  
@@ -25,7 +25,7 @@ Dillinger uses a number of open source projects to work properly:
  
 * [Bash] - Main core of whole application. Everything is based on pure Bash to run correctly on Linux, Mac and even on Windows with emulator
 * [Cron] -  scheduler which check tasks
-* [ncat] - online hoster , backdorer
+* [ncat] - online hoster , backdorer (OPTIONAL)
  
  
 ### Installation
@@ -103,3 +103,38 @@ to read this you need usage
  
                 ./Main.sh read --name= whatever --out_dir= /home/death/Bash/PokazTuWyjdzie --backup_dir= /home/death/Bash/PokazStad
 
+
+###  PLUGINS 
+Using ncat  you can host backups online and share task in backdore to use this
+ HOW TO: 
+
+>   C can also be used to copy the files from one system to another, though it is not recommended & mostly all systems have ssh/scp installed by default. But none the less if you have come across a system with no ssh/scp, you can also use nc as last ditch effort.
+
+Start with machine on which data is to be received & start nc is listener mode,
+
+                $ ncat -l  8080 > file.txt
+
+Now on the machine from where data is to be copied, run the following command,
+
+                $ ncat 192.168.1.100 8080 --send-only < data.txt
+
+Here, data.txt is the file that has to be sent. –send-only option will close the connection once the file has been copied. If not using this option, than we will have press ctrl+c to close the connection manually.
+
+We can also copy entire disk partitions using this method, but it should be done with caution.
+###Example: 7) Create a backdoor via nc/nact
+
+NC command can also be used to create backdoor to your systems & this technique is actually used by hackers a lot. We should know how it works in order to secure our system. To create a backdoor, the command is,
+
+                $ ncat -l 10000 -e /bin/bash
+
+‘e‘ flag attaches a bash to port 10000. Now a client can connect to port 10000 on server & will have complete access to our system via bash,
+
+                $ ncat 192.168.1.100 1000
+
+###Example: 8) Port forwarding via nc/ncat
+
+We can also use NC for port forwarding with the help of option ‘c’ , syntax for accomplishing port forwarding is,
+
+                $ ncat -u -l  80 -c  'ncat -u -l 8080'
+
+Now all the connections for port 80 will be forwarded to port 8080.

@@ -16,21 +16,21 @@ checkIfFileExists(){
   checkIfFileExists(){
   if [[ -z $date ]]
   then
-    echo "Musisz podać --date"
+    echo "Brakujacy argument  --date"
     exit 0
   fi
   }
   checkIfFileExists(){
   if [[ -z $backup_dir ]]
   then
-    echo "Musisz podać --backup_dir"
+    echo "Brakujacy argument --backup_dir"
     exit 0
   fi
   }
   checkIfFileExists(){
   if [[ -z $out_dir ]]
   then
-    echo "Musisz podać --out_dir"
+    echo "Brakujacy argument  --out_dir"
     exit 0
   fi
   }
@@ -68,13 +68,11 @@ cd $backup_dir
   for file in "$backup_dir"/*
   do
     candidate=${file##*/}
-echo $candidate
     backupFileRegex=$name"_[[:alpha:]]+_([[:digit:]]+_){4}[[:digit:]]+.*"
 
  
     if [[ $candidate =~ $backupFileRegex ]]
     then
-    echo $candidate
       #wyciąga datę z nazwy pliku
       candidateDate=$(echo $candidate | grep -oE "([[:digit:]]+_){4}[[:digit:]]+")
       IFS='_' read -a candidateDate <<< $candidateDate

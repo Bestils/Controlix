@@ -104,7 +104,7 @@ then
         fi
         if [[ -z $inc && -n $full ]]; then
             ./logsCreator.sh -r
-           echo $path
+
             cd $path
             eval pwd | echo
              tar -cvzp -f $backupDir/$name"_"$inc$full"_"$date.tar$gzip  $path
@@ -113,7 +113,6 @@ then
         fi
         if [[ -n $inc && -z $full ]]; then
             ./logsCreator.sh -r
-            echo $path
             cd $path
             eval pwd | echo
             
