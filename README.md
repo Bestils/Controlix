@@ -68,23 +68,38 @@ read
  
                         format datyof date: YEAR_MONYH_DAY_HOUR_MINUTE'
  
-        --backup-dir='directory with backup'
- 
-        --out-dir='Destination of backup
+        --backup_dir='directory with backup'
+
+        --out_dir='Destination of backup
  
 cron
  
+
+ #### cron 
 To activate this you just need to add to cron
-* * * * * and path to autoBacku.sh
- 
+                * * * * * and path to autoBackup.sh
+
+autoBackup.sh is executed by cron every minute . This script check task's list for any maching one. 
+
+If you want to run this more frequently then every munute add 
+                * * * * * ( sleep 30 ; /path/to/executable param1 param2 )
+here time in sleep is delay
+
 ### Example usage
  
-                ./Main.sh create --name= whatever --path= $HOME/Bash/test --backup-dir= $HOME/Bash/test2 --gzip --full-interval= 109
+                ./Main.sh create --name= whatever --path= $HOME/Bash/PokazTuWyjdzie --backup-dir= $HOME/Bash/PokazStad --gzip --full-interval= 109
  
   this backup will be doing automaticly every 3 minutes.
+
  
-and next to execute this you can add -execute or run by hand ./autoBacku.sh
+and next to execute this you can add -execute 
+like 
+                ./Main.sh create -execute --name= whatever --path= $HOME/Bash/PokazTuWyjdzie --backup-dir= $HOME/Bash/PokazStad --gzip --full-interval= 109
+
+Cron will just run file autoBackup.sh so if you want to test if it will work just write 
+                $HOME/Bash/Controlix/autoBackup.sh
  
 to read this you need usage
  
-                ./Main.sh read --name= whatever --path= $HOME/Bash/test2 --out-dir= $Home/Bash/test2  --date = 2020_01_25_15_15
+                ./Main.sh read --name= whatever --out_dir= /home/death/Bash/PokazTuWyjdzie --backup_dir= /home/death/Bash/PokazStad
+

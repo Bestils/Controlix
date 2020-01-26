@@ -63,17 +63,15 @@ _main() {
 done
 }
 _main "$@"
-
+cd $backup_dir
   #szukanie backupu do otwarcia
   for file in "$backup_dir"/*
   do
     candidate=${file##*/}
-
+echo $candidate
     backupFileRegex=$name"_[[:alpha:]]+_([[:digit:]]+_){4}[[:digit:]]+.*"
 
-    # backupFileRegex="/[a-z]+_+((\d+_){4})+\d+.*/g" #$name_cokolwiek_data_colokwiek wystarczy
-    #regex czy to jest backup
-    
+ 
     if [[ $candidate =~ $backupFileRegex ]]
     then
     echo $candidate

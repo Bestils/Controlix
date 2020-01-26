@@ -38,6 +38,7 @@ _main() {
     'read')
       shift
       source "Read/Read.sh" $@
+      exit 0
       ;;
 
     'create')
@@ -56,10 +57,11 @@ _main() {
       exit 1
   esac
 }
-cd $HOME/Bash/Controlix
+
 checkIFLogsAreActive
-./logsCreator.sh -c
+
 _main "$@"
+./logsCreator.sh -c
 ./logsCreator.sh -r
 exit 0
 
